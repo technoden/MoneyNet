@@ -1,36 +1,73 @@
 //Importing libraries
-const { urlencoded } = require("express")
-const express = require("express")
-const app = express()
+const express = require('express');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const { db } = require('./db/db');
 
-const { MongoClient } = require('mongodb')
-const client = new MongoClient('mongodb+srv://Liza:18092002@cluster0.a6ak6gm.mongodb.net/?retryWrites=true&w=majority')
+require('dotenv').config();
 
-const start = async () => {
+const app = express();
+
+app.use(express.json());
+
+
+
+const userSchema = new mongoose.Schema({
+    email: { type: String, unique: true },
+    password: String,
+});
+
+const User = mongoose.model('User', userSchema);
+
+
+app.post('/signup', async (req, res) => {
     try {
-        await client.connect()
-        console.log('Database connection ')
+        
+        const user = await User.findOne({ email: req.body.email });
+        if (user) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
 
-        await client.db().createCollection('users')
-        const users=client.db().collection(name:'users')
-    } catch (e) {
-        console.log(e)
+       
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+        const newUser = new User({
+            email: req.body.email,
+            password: hashedPassword,
+        });
+
+        
+        const savedUser = await newUser.save();
+        res.json({ message: 'User created successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-}
+});
 
-start()
+// Login 
+app.post('/login', async (req, res) => {
+    try {
+
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(400).json({ error: 'Invalid credentials' });
+        }
 
 
-app.use(express, urlencoded({ extended: false }))
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        if (!validPassword) {
+            return res.status(400).json({ error: 'Invalid credentials' });
+        }
 
-/* app.post('/register', async (req, res) => {
-
-})
-*/
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 //Routes
 app.get('/', (req, res) => {
-    res.render("index.ejs")
+    res.send("index.ejs")
 })
 
 app.get('/login', (req, res) => {
