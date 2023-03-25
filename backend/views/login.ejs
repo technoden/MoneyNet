@@ -48,7 +48,7 @@
                                                                                                                                                                                   
           <div class="card bg-glass">
             <div class="card-body px-4 py-5 px-md-5">
-              <form action="/login" method="POST">
+              <form action="/auth/login" method="POST">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row"> 
 
@@ -56,10 +56,10 @@
                   
                 </div>
   
-                <!-- Email input -->
+                <!-- Username input -->
                 <div class="form-outline mb-4">
-                  <input type="email" name="email" id="form3Example3" class="form-control" />
-                  <label class="form-label" for="form3Example3">Email address</label>
+                  <input type="username" name="username" id="form3Example3" class="form-control" />
+                  <label class="form-label" for="form3Example3">Username</label>
                 </div>
   
                 <!-- Password input -->
@@ -77,7 +77,7 @@
         
                 <!-- Register buttons -->
                 <div class="text-center">
-                  <p>Don't have an account yet? <a href="file:///C:/MoneyNet/register.html">Registration</a></p>
+                  <p>Don't have an account yet? <a href="./register.ejs">Registration</a></p>
                 
                 </div>
               </form>
