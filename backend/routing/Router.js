@@ -1,10 +1,11 @@
 const Router = require('express')
 const router = new Router()
-//const controller = require('./authController')
+const controller = require('../controllers/Controller')
 
-router.get('/',function(req,res){
+router.get('/',(req,res) => {
     res.render('index');
 });
+
 
 
 
