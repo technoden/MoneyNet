@@ -6,7 +6,7 @@ const{check}=require("express-validator")
 
 router.get('/login', function(req, res) {
     res.render('login');
-});s
+});
 router.get('/registration', function(req, res) {
     res.render('register');
 });
