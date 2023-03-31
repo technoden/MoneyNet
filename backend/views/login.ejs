@@ -16,7 +16,8 @@
 <section class="background-radial-gradient overflow-hidden">
     <style>
       body {
-			background: url(img/reg.jpg);
+        background: rgb(181, 181, 181);
+			/*background: url(img/reg.jpg);*/
 			/* background-repeat: no-repeat; */
 		    background-size: cover; 
 		}
@@ -58,7 +59,7 @@
   
                 <!-- Username input -->
                 <div class="form-outline mb-4">
-                  <input type="username" name="username" id="form3Example3" class="form-control" />
+                  <input type="text" name="username" id="form3Example3" class="form-control" />
                   <label class="form-label" for="form3Example3">Username</label>
                 </div>
   
@@ -67,10 +68,9 @@
                   <input type="password" name="password" id="form3Example4" class="form-control" />
                   <label class="form-label" for="form3Example4">Password</label>
                 </div>
-  
-  
+                
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4">
+                <button type="submit" onclick="login()" class="btn btn-primary btn-block mb-4" >
                   Sign In
                 </button> 
   

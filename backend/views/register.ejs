@@ -1,61 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
 </head>
+
 <body>
-    <div class="container mt-4">
-   
+  <div class="container mt-4">
+
     <!-- Section: Design Block -->
-<section class="background-radial-gradient overflow-hidden">
-    <style>
+    <section class="background-radial-gradient overflow-hidden">
+      <style>
+        body {
+          background: rgb(181, 181, 181);
+          /*background: url(img/reg.jpg);*/
+          /* background-repeat: no-repeat; */
+          background-size: cover;
+        }
+      </style>
 
-		body {
-			background: url(img/reg.jpg);
-			/* background-repeat: no-repeat; */
-			background-size: cover;
-		}
-
-    </style>
-  
-    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-      <div class="row gx-lg-5 align-items-center mb-5">
-        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-          <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-            Welcome to <br />
-            <span style="color: hsl(218, 82%, 18%)">MoneyNet</span>
-          </h1>
-          <p class="mb-4 opacity-70" style="color: hsl(218, 82%, 18%)">
-              MoneyNet will help you not to ovespend on your well-earned salary by setting up a budget plan that fits you.
+      <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+        <div class="row gx-lg-5 align-items-center mb-5">
+          <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+            <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+              Welcome to <br />
+              <span style="color: hsl(218, 82%, 18%)">MoneyNet</span>
+            </h1>
+            <p class="mb-4 opacity-70" style="color: hsl(218, 82%, 18%)">
+              MoneyNet will help you not to ovespend on your well-earned salary by setting up a budget plan that fits
+              you.
               Do you want a shared budget with your partner?
-              Or keep the expenses between you and your mates fair on the vacation? No problem, just invite them and get a clear
+              Or keep the expenses between you and your mates fair on the vacation? No problem, just invite them and get
+              a clear
               picture of who spent what.
-          </p>
-        </div>
-  
-        <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-          <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-          <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
-  
-          <div class="card bg-glass">
-            <div class="card-body px-4 py-5 px-md-5">
-              <form action="/auth/registration" method="POST">
-                <!-- 2 column grid layout with text inputs for the first and last names -->
-                <div class="row">
-                  
-                  <h1 class="mb-3 h3">Registration</h1>
-                  <div class="col-md-12 mb-4">
-                    <div class="form-outline">
-                      <input type="text" name="name" id="form3Example2" class="form-control" />
-                      <label class="form-label" for="form3Example2">Full Name</label>
+            </p>
+          </div>
+
+          <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+            <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+            <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+            <div class="card bg-glass">
+              <div class="card-body px-4 py-5 px-md-5">
+                <form action="/auth/registration" method="POST">
+                  <!-- 2 column grid layout with text inputs for the first and last names -->
+                  <div class="row">
+
+                    <h1 class="mb-3 h3">Registration</h1>
+                    <div class="col-md-12 mb-4">
+
                     </div>
                   </div>
+
+
+                  <!-- Username input -->
+                  <div class="form-outline mb-4">
+                    <input type="text" name="username" id="form3Example3" class="form-control" />
+                    <label class="form-label" for="form3Example3">Username</label>
+                  </div>
+
+                  <!-- Password input -->
+                  <div class="form-outline mb-4">
+                    <input type="password" name="password" id="form3Example4" class="form-control" />
+                    <label class="form-label" for="form3Example4">Password</label>
+                  </div>
+
+
+                  <!-- Submit button -->
+                  <button type="submit" onclick="registration()" class="btn btn-primary btn-block mb-4">
+                    Sign up
+                  </button>
+
+                  <script>
+                    async function registration(req, res) {
+                      try {
+                        // Проверяем наличие ошибок валидации
+                        const errors = validationResult(req);
+                        if (!errors.isEmpty()) {
+                          return res.status(400).json({ message: "registration error", errors });
+                        }
+
+                        // Извлекаем данные из тела запроса
+                        const { username, password } = req.body;
+
+                        // Проверяем, что пользователь с таким именем не существует
+                        const candidate = await User.findOne({ username });
+                        if (candidate) {
+                          return res.status(400).json({ message: 'User exists' });
+                        }
+
+                        // Хэшируем пароль
+                        const hashPassword = bcrypt.hashSync(password, 7);
+
+                        // Получаем роль пользователя
+                        const userRole = await Role.findOne({ value: "USER" });
+
+                        // Создаем нового пользователя
+                        const user = new User({ username, password: hashPassword, roles: [userRole.value] });
+                        await user.save();
+
+                        // Отправляем ответ об успешной регистрации
+                        return res.json({ message: 'user successfully registered' });
+                      } catch (e) {
+                        console.log(e);
+                        // Обрабатываем ошибку
+                        res.status(400).json({ message: 'Registration error' });
+                      }
+                    }
+
+
+                  </script>
+
+
+                  <!-- Register buttons -->
+                  <div class="text-center">
+                    <p>Already have an account? <a href="login">Log In</a></p>
+
+                  </div>
+                </form>
+              </div>
+
                 </div>
   
                 <!-- Username input -->
@@ -81,18 +152,21 @@
                 
                 </div>
               </form>
+
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  <!-- Section: Design Block -->
-    </div>
+    </section>
+    <!-- Section: Design Block -->
+  </div>
 
 
-    <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
 
 </body>
+
 </html>
