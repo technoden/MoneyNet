@@ -3,7 +3,7 @@ const router = new Router()
 const { addExpense,getExpense, deleteExpense, deleteIncome, addIncome, getIncomes } = require('../controllers/Controller');
 
 router.get('/',(req,res) => {
-    res.render('index');
+    res.render("home");
 });
 
 

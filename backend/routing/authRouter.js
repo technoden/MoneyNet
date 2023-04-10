@@ -8,7 +8,7 @@ router.get('/login', function(req, res) {
     res.render('login');
 });
 router.get('/registration', function(req, res) {
-    res.render('register');
+    res.render("register");
 });
 
 router.post('/registration',[
