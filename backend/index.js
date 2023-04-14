@@ -1,10 +1,16 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const {readdirSync} = require('fs');
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 5000
 
 const app = express();
+
+
+// routes
+// readdirSync('./routing').map((route)=>app.use('/api/v1',require('./routing/' + route)))
+
 
 let intialPath = path.join(__dirname, "views");
 
