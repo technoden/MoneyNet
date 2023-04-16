@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const User = require('../backend/models/User')
 const PORT = process.env.PORT || 5000
 
 const app = express();
@@ -10,6 +11,7 @@ let intialPath = path.join(__dirname, "views");
 
 app.use(bodyParser.json());
 app.use(express.static(intialPath));
+app.use('/', require('../backend/routing/Router'));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(intialPath, "index.html"));
@@ -23,20 +25,15 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(intialPath, "register.html"));
 });
 
-const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
-});
-
-const User = mongoose.model('User', userSchema);
-
 app.post('/register-user', async(req, res) => {
     const { name, email, password } = req.body;
 
-    const candidate = await User.findOne({ email })
+    const candidate = await User.findOne({ email });
+
     if(!name.length || !email.length || !password.length){
         res.json('fill all the fields');
+    } else if(candidate){
+        res.json('email already exists');
     } else{
         const user = new User({
             name: name,
@@ -49,40 +46,32 @@ app.post('/register-user', async(req, res) => {
                 res.json({ name: data.name, email: data.email });
             })
             .catch(err => {
-                if(candidate){
-                    res.json('email already exists');
-                } else{
-                    console.log(err);
-                    res.json('error occurred');
-                }
+                console.log(err);
+                res.json('error occurred');
             });
     }
 });
 
-app.post('/login-user', (req, res) => {
+app.post('/login-user', async(req, res) => {
     const { email, password } = req.body;
 
-    User.findOne({
-        email: email,
-        password: password
-    })
-    .then(data => {
-        if(data){
-            res.json({ password: data.password, email: data.email });
+    try{
+        const user = await User.findOne({ email });
+
+        if(user && user.password === password){
+            res.json({ name: user.name, email: user.email });
         } else{
             res.json('email or password is incorrect');
         }
-    })
-    .catch(err => {
+    } catch(err){
         console.log(err);
         res.json('error occurred');
-    });
+    }
 });
 
 const start = async () => {
     try {
-        await mongoose.connect(`mongodb+srv://Liza:18092002@cluster0.xpg8n7v.mongodb.net/?retryWrites=true&w=majority`)
-        //await mongoose.connect(`mongodb+srv://liza:18092002@cluster0.lkggfcn.mongodb.net/?retryWrites=true&w=majority`)
+        await mongoose.connect(`mongodb+srv://lizanorko:18092002@cluster0.pfmzppk.mongodb.net/?retryWrites=true&w=majority`)
         app.listen(PORT, () => console.log(`server started on port ${PORT}`))
     } catch (e) {
         console.log(e)
