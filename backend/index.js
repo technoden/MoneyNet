@@ -25,6 +25,14 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(intialPath, "register.html"));
 });
 
+app.get('/incomes', (req, res) => {
+    res.sendFile(path.join(intialPath, "expenses.html"));
+});
+
+app.get('/expenses', (req, res) => {
+    res.sendFile(path.join(intialPath, "incomes.html"));
+});
+
 app.post('/register-user', async(req, res) => {
     const { name, email, password } = req.body;
 
