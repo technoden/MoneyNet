@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const bcrypt=require('bcryptjs')
 const mongoose = require('mongoose');
 const User = require('../backend/models/User')
 const PORT = process.env.PORT || 5000
@@ -11,7 +12,7 @@ let intialPath = path.join(__dirname, "views");
 
 app.use(bodyParser.json());
 app.use(express.static(intialPath));
-app.use('/', require('../backend/routing/Router'));
+//app.use('/', require('../backend/routing/Router'));
 
 app.use(express.urlencoded({ extended: true }));
 // app.use(cors());
@@ -47,10 +48,11 @@ app.post('/register-user', async(req, res) => {
     } else if(candidate){
         res.json('email already exists');
     } else{
+        const hashPassword=bcrypt.hashSync(password,7)
         const user = new User({
             name: name,
             email: email,
-            password: password
+            password: hashPassword
         });
 
         user.save()
@@ -70,7 +72,7 @@ app.post('/login-user', async(req, res) => {
     try{
         const user = await User.findOne({ email });
 
-        if(user && user.password === password){
+        if(user && bcrypt.compareSync(password, user.password)){
             res.json({ name: user.name, email: user.email });
         } else{
             res.json('email or password is incorrect');
