@@ -13,6 +13,10 @@ app.use(bodyParser.json());
 app.use(express.static(intialPath));
 app.use('/', require('../backend/routing/Router'));
 
+app.use(express.urlencoded({ extended: true }));
+// app.use(cors());
+app.use(express.json());
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(intialPath, "index.html"));
 });
