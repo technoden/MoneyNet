@@ -1,18 +1,15 @@
 const Router = require('express')
 const router = new Router()
-const { addExpense,getExpense, deleteExpense, deleteIncome, addIncome, getIncomes } = require('../controllers/Controller');
+const { addMoney,getMoney, deleteMoney } = require('../controllers/Controller');
 
 router.get('/',(req,res) => {
     res.render("home");
 });
 
 
-router.post('/add-income',addIncome)
-    .get('/get-incomes', getIncomes)
-    .post('/add-expense', addExpense)
-    .get('/get-expenses', getExpense)
-    .delete('/delete-income/:id', deleteIncome)
-    .delete('/delete-expense/:id', deleteExpense)
+router.post('/add-money',addMoney)
+//.get('/get-money', getMoney)
+//.delete('/delete-money/:id', deleteMoney)
 
 
 module.exports = router

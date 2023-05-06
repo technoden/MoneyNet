@@ -14,3 +14,14 @@ logOut.onclick = () => {
     sessionStorage.clear();
     location.reload();
 }
+
+const select = document.querySelector('#category');
+const otherCategory = document.querySelector('#new-category-container');
+
+select.addEventListener('change', () => {
+    if (select.value === 'Other') {
+        otherCategory.style.display = 'block';
+    } else {
+        otherCategory.style.display = 'none';
+    }
+});
