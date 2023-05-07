@@ -11,7 +11,6 @@ exports.addMoney = async (req, res) => {
         description,
 
     })
-
     try {
         if(!title || !category || !type){
             return res.status(400).json({message: 'All fields are required!'})
@@ -20,7 +19,8 @@ exports.addMoney = async (req, res) => {
             return res.status(400).json({message: 'Amount must be a positive number!'})
         }
         await money.save()
-        res.status(200).json({message: 'Successfully Added'})
+        //res.status(200).json({message: 'Successfully Added'})
+        res.redirect('/?success=Money%20added%20successfully');
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Server Error'})
@@ -30,16 +30,29 @@ exports.addMoney = async (req, res) => {
 }
 
 
-/*
-exports.getExpense = async (req, res) =>{
+
+exports.getExpenses = async (req, res) => {
     try {
-        const incomes = await ExpenseSchema.find().sort({createdAt: -1})
-        res.status(200).json(incomes)
+        const money = await MoneySchema.find({type:'expense'});
+        res.status(200).json(money);
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: 'Server Error'})
     }
-}
-exports.getIncomes = async (req, res) =>{
+};
+
+exports.getIncomes = async (req, res) => {
+    try {
+        const money = await MoneySchema.find({type:'income'});
+        res.status(200).json(money);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: 'Server Error'})
+    }
+};
+
+/*
+exports.getExpenses = async (req, res) =>{
     try {
         const incomes = await IncomeSchema.find().sort({createdAt: -1})
         res.status(200).json(incomes)
@@ -48,7 +61,7 @@ exports.getIncomes = async (req, res) =>{
         res.status(500).json({message: 'Server Error'})
     }
 }
-
+/*
 exports.deleteExpense = async (req, res) =>{
     const {id} = req.params;
     ExpenseSchema.findByIdAndDelete(id)

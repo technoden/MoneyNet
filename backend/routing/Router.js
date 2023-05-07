@@ -1,6 +1,6 @@
 const Router = require('express')
 const router = new Router()
-const { addMoney,getMoney, deleteMoney } = require('../controllers/Controller');
+const { addMoney,getExpenses,getIncomes} = require('../controllers/Controller');
 
 router.get('/',(req,res) => {
     res.render("home");
@@ -8,7 +8,8 @@ router.get('/',(req,res) => {
 
 
 router.post('/add-money',addMoney)
-//.get('/get-money', getMoney)
+    .get('/get-expenses', getExpenses)
+    .get('/get-incomes', getIncomes)
 //.delete('/delete-money/:id', deleteMoney)
 
 
