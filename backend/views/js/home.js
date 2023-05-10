@@ -58,3 +58,32 @@ fetch('get-incomes')
         });
     })
     .catch(error => console.error(error));
+
+const incomeSum = document.getElementById('income-sum');
+
+fetch('get-incomes')
+  .then(response => response.json())
+  .then(data => {
+    const sum = data.reduce((acc, income) => acc + income.amount, 0);
+    const sumDiv = document.createElement('div');
+    sumDiv.textContent = `$${sum}`;
+    incomeSum.appendChild(sumDiv);
+
+    
+  })
+  .catch(error => console.error(error));
+
+  const expenseSum = document.getElementById('expense-sum');
+
+fetch('get-expenses')
+  .then(response => response.json())
+  .then(data => {
+    const sum = data.reduce((acc, expense) => acc + expense.amount, 0);
+    const sumDiv = document.createElement('div');
+    sumDiv.textContent = `$${sum}`;
+    expenseSum.appendChild(sumDiv);
+
+    
+  })
+  .catch(error => console.error(error));
+
