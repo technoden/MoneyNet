@@ -33,7 +33,7 @@ exports.addMoney = async (req, res) => {
 
 exports.getExpenses = async (req, res) => {
     try {
-        const money = await MoneySchema.find({type:'expense'});
+        const money = await MoneySchema.find({ type: 'expense' }).sort({ createdAt: -1 });
         res.status(200).json(money);
     } catch (error) {
         console.log(error);
@@ -43,7 +43,7 @@ exports.getExpenses = async (req, res) => {
 
 exports.getIncomes = async (req, res) => {
     try {
-        const money = await MoneySchema.find({type:'income'});
+        const money = await MoneySchema.find({ type: 'income' }).sort({ createdAt: -1 });
         res.status(200).json(money);
     } catch (error) {
         console.log(error);
@@ -73,6 +73,57 @@ exports.deleteIncome = async (req, res) =>{
             res.status(500).json({message: 'Server Error'})
         })
 }
+
+exports.editIncome = async (req, res) => {
+    const { id } = req.params;
+    const { title, amount, category, newCategory, description } = req.body;
+
+    try {
+        const money = await MoneySchema.findById(id);
+
+        if (!money) {
+            return res.status(404).json({ message: 'Money not found' });
+        }
+
+        money.title = title || money.title;
+        money.amount = amount || money.amount;
+        money.category = newCategory || category || money.category;
+        money.description = description || money.description;
+
+        await money.save();
+
+
+        res.status(200).json({ message: 'Money updated successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+exports.editExpense = async (req, res) => {
+    const { id } = req.params;
+    const { title, amount, category, newCategory, description } = req.body;
+
+    try {
+        const money = await MoneySchema.findById(id);
+
+        if (!money) {
+            return res.status(404).json({ message: 'Money not found' });
+        }
+
+        money.title = title || money.title;
+        money.amount = amount || money.amount;
+        money.category = newCategory || category || money.category;
+        money.description = description || money.description;
+
+        await money.save();
+
+        res.status(200).json({ message: 'Money updated successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
 
 
 
