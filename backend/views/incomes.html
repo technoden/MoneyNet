@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
     <title>Dashboard - MoneyNet</title>
+    <link rel="icon" type="img/x-icon" href="img/MoneyNet.png">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -39,7 +40,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/info">
 
             <div class="sidebar-brand-text mx-3">MoneyNet<sup></sup></div>
         </a>
@@ -179,7 +180,7 @@
                                         <h2>Income List</h2>
                                     </div>
                                     <div class="col-sm-6">
-                                        <a href="#addModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Expense</span></a>
+                                        <a href="#addModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Income</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -275,48 +276,18 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="title">Title</label>
-                                        <input type="text" name="title" id="title" class="form-control" required>
+                                        <label for="productCode">Category</label>
+                                        <input type="text" name="productCode" id="productCode" class="form-control" required>
                                     </div>
-
                                     <div class="form-group">
-                                        <label for="type">Type</label>
-                                        <select type="text" name="type" id="type" class="form-control"
-                                                required>
-                                            <option value="income">Income</option>
-                                            <option value="expense">Expense</option>
-                                        </select>
+                                        <label for="product">Product name</label>
+                                        <input type="text" name="product" id="product" class="form-control" required>
                                     </div>
-
                                     <div class="form-group">
-                                        <label for="amount">Price</label>
-                                        <input type="number" name="amount" id="amount" class="form-control"
-                                               required>
+                                        <label for="perPrice">Price</label>
+                                        <input type="number" name="perPrice" id="perPrice" class="form-control" required></input>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="category">Category </label>
-                                        <select type="text" name="category" id="category" class="form-control" >
-                                            <option value="food">Food</option>
-                                            <option value="transportation">Transportation</option>
-                                            <option value="housing">Housing</option>
-                                            <option value="education">Education</option>
-                                            <option value="health">Health</option>
-                                            <option value="clothing">Clothing</option>
-                                            <option value="travelling">Travelling</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-
-                                    <div id="new-category-container" style="display:none;">
-                                        <label for="newCategory">New category:</label>
-                                        <input type="text" name="newCategory" id="newCategory">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="description">Description </label>
-                                        <input type="text" name="description" id="description" class="form-control">
-                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -464,7 +435,7 @@
     }
 
 </script>
-
+<script type="text/javascript" src="js/home.js"></script>
 
 </body>
 
