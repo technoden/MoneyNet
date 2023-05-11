@@ -40,6 +40,10 @@ app.get('/expenses', (req, res) => {
     res.sendFile(path.join(intialPath, "expenses.html"));
 });
 
+app.get('/info', (req, res) => {
+    res.sendFile(path.join(intialPath, "info.html"));
+});
+
 app.post('/register-user', async(req, res) => {
     const { name, email, password } = req.body;
 
