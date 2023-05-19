@@ -29,7 +29,15 @@ exports.addMoney = async (req, res) => {
     console.log(money)
 }
 
-
+exports.getMoney = async (req, res) => {
+    try {
+        const money = await MoneySchema.find().sort({ createdAt: -1 });
+        res.status(200).json(money);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: 'Server Error'})
+    }
+};
 
 exports.getExpenses = async (req, res) => {
     try {
