@@ -87,3 +87,21 @@ fetch('get-expenses')
   })
   .catch(error => console.error(error));
 
+const allBalance = document.getElementById('all-balance');
+
+Promise.all([fetch('get-expenses'), fetch('get-incomes')])
+  .then(responses => Promise.all(responses.map(response => response.json())))
+  .then(data => {
+    const expenses = data[0];
+    const incomes = data[1];
+
+    const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+    const totalIncomes = incomes.reduce((acc, income) => acc + income.amount, 0);
+    const balance = totalIncomes - totalExpenses;
+
+    const balanceDiv = document.createElement('div');
+    balanceDiv.textContent = `$${balance}`;
+    allBalance.appendChild(balanceDiv);
+  })
+  .catch(error => console.error(error));
+
