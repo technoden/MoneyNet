@@ -1,18 +1,19 @@
 const MoneySchema = require('../models/Money')
 
 exports.addMoney = async (req, res) => {
-    const {title,type, amount, category,newCategory, description}  = req.body
+    const {title,type,date, amount, category,newCategory, description}  = req.body
 
     const money = MoneySchema({
         title,
         type,
+        date,
         amount,
         category: newCategory || category,
         description,
 
     })
     try {
-        if(!title || !category || !type){
+        if(!title || !category || !type ){
             return res.status(400).json({message: 'All fields are required!'})
         }
         if(amount <= 0 || !amount === 'number'){
@@ -84,7 +85,7 @@ exports.deleteIncome = async (req, res) =>{
 
 exports.editIncome = async (req, res) => {
     const { id } = req.params;
-    const { title, amount, category, newCategory, description } = req.body;
+    const { title, amount,date, category, newCategory, description } = req.body;
 
     try {
         const money = await MoneySchema.findById(id);
@@ -94,6 +95,7 @@ exports.editIncome = async (req, res) => {
         }
 
         money.title = title || money.title;
+        money.date = title || money.date;
         money.amount = amount || money.amount;
         money.category = newCategory || category || money.category;
         money.description = description || money.description;
@@ -110,7 +112,7 @@ exports.editIncome = async (req, res) => {
 
 exports.editExpense = async (req, res) => {
     const { id } = req.params;
-    const { title, amount, category, newCategory, description } = req.body;
+    const { title, amount,date, category, newCategory, description } = req.body;
 
     try {
         const money = await MoneySchema.findById(id);
@@ -120,6 +122,7 @@ exports.editExpense = async (req, res) => {
         }
 
         money.title = title || money.title;
+        money.date = title || money.date;
         money.amount = amount || money.amount;
         money.category = newCategory || category || money.category;
         money.description = description || money.description;

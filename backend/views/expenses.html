@@ -190,6 +190,7 @@
                                     <th>Title</th>
                                     <th>Amount</th>
                                     <th>Category</th>
+                                    <th>Data</th>
                                     <th>Description</th>
                                     <th>Actions</th>
                                 </tr>
@@ -231,6 +232,11 @@
                                         <input type="number" name="amount" id="amount" class="form-control"
                                                required>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="date">Date</label>
+                                        <input type="date" name="date" id="date" class="form-control"
+                                               required>
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="category">Category </label>
@@ -269,29 +275,52 @@
                 <div id="editExpenseModal" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form>
+                            <form id="editExpenseForm">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Edit Expense</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="productCode">Category</label>
-                                        <input type="text" name="productCode" id="productCode" class="form-control" required>
+                                        <label for="editTitle">Title</label>
+                                        <input type="text" name="editTitle" id="editTitle" class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="product">Product name</label>
-                                        <input type="text" name="product" id="product" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="perPrice">Price</label>
-                                        <input type="number" name="perPrice" id="perPrice" class="form-control" required></input>
+                                        <label for="editAmount">Amount</label>
+                                        <input type="number" name="editAmount" id="editAmount" class="form-control" required>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="date">Date</label>
+                                        <input type="date" name="date" id="date" class="form-control"
+                                               required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="category">Category </label>
+                                        <select type="text" name="category" id="category" class="form-control" >
+                                            <option value="food">Food</option>
+                                            <option value="transportation">Transportation</option>
+                                            <option value="housing">Housing</option>
+                                            <option value="education">Education</option>
+                                            <option value="health">Health</option>
+                                            <option value="clothing">Clothing</option>
+                                            <option value="travelling">Travelling</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div id="new-category-container" style="display:none;">
+                                        <label for="newCategory">New category:</label>
+                                        <input type="text" name="newCategory" id="newCategory">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editDescription">Description</label>
+                                        <input type="text" name="editDescription" id="editDescription" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                    <input type="submit" class="btn btn-info" value="Save">
+                                    <input type="submit" class="btn btn-info" id="saveChangesButton" value="Save">
                                 </div>
                             </form>
                         </div>
@@ -385,11 +414,52 @@
             categoryTd.textContent = expense.category;
             tr.appendChild(categoryTd);
 
+            const dateTd = document.createElement('td');
+            const date = new Date(expense.date);
+            dateTd.textContent = date.toLocaleDateString();
+            tr.appendChild(dateTd);
+
             const descriptionTd = document.createElement('td');
             descriptionTd.textContent = expense.description;
             tr.appendChild(descriptionTd);
 
             const actionsTd = document.createElement('td');
+
+            // Edit button
+            const editButton = document.createElement('button');
+            editButton.classList.add('btn', 'btn-warning', 'mr-2');
+            editButton.textContent = 'Edit';
+            editButton.setAttribute('data-toggle', 'modal');
+            editButton.setAttribute('data-target', '#editIncomeModal');
+            editButton.addEventListener('click', () => {
+                // Populate the edit modal with the current values of the income record
+                const editTitle = document.getElementById('editTitle');
+                const editAmount = document.getElementById('editAmount');
+                const editDate = document.getElementById('editDate');
+                const editCategory = document.getElementById('category'); // Updated ID
+                const editDescription = document.getElementById('editDescription');
+                editTitle.value = expense.title;
+                editAmount.value = expense.amount;
+                editDate.value=expense.date,
+                editCategory.value = expense.category;
+                editDescription.value = expense.description;
+
+                // Save changes button
+                const saveChangesButton = document.getElementById('saveChangesButton');
+                saveChangesButton.addEventListener('click', () => {
+                    const updatedIncome = {
+                        title: editTitle.value,
+                        amount: editAmount.value,
+                        date: editDate.value,
+                        category: editCategory.value,
+                        description: editDescription.value
+                    };
+                    editIncome(expense._id, updatedExpense);
+                    $('#editExpenseModal').modal('hide');
+                });
+            });
+            actionsTd.appendChild(editButton);
+
             const deleteButton = document.createElement('button');
             deleteButton.classList.add('btn', 'btn-danger');
             deleteButton.textContent = 'Delete';
@@ -429,6 +499,23 @@
             const data = await response.json();
             console.log(data.message);
             getExpensesAndRender();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function editExpense(id, editExpense) {
+        try {
+            const response = await fetch(`edit-expense/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(editExpense)
+            });
+            const data = await response.json();
+            console.log(data.message);
+            // Handle the response or perform additional operations
         } catch (error) {
             console.error(error);
         }

@@ -19,6 +19,11 @@ const MoneySchema = new mongoose.Schema({
         required:true,
         trim:true
     },
+    date: {
+        type: Date,
+        required: true,
+        trim: true
+    },
     category: {
         type: String,
         required: true,
