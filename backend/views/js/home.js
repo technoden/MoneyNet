@@ -72,32 +72,87 @@ Promise.all([fetch('get-expenses'), fetch('get-incomes')])
     })
     .catch(error => console.error(error));
 
-const List = document.getElementById('list');
+    const List = document.getElementById('list');
 
-function renderMoneyList(moneys) {
-    List.innerHTML = '';
-    moneys.forEach(money => {
-        const tr = document.createElement('tr');
+    function renderMoneyList(moneys) {
+        List.innerHTML = '';
+        moneys.forEach(money => {
+            const tr = document.createElement('tr');
+        
+            const descriptionTd = document.createElement('td');
+            descriptionTd.textContent = money.description;
+            tr.appendChild(descriptionTd)
 
-        const titleTd = document.createElement('td');
-        titleTd.textContent = money.title;
-        tr.appendChild(titleTd);
+            const titleTd = document.createElement('td');
+            titleTd.textContent = money.title;
+            tr.appendChild(titleTd);
+    
+            const categoryTd = document.createElement('td');
+            categoryTd.textContent = money.category;
+            tr.appendChild(categoryTd);
+    
+            const amountTd = document.createElement('td');
+            amountTd.textContent = `$${money.amount}`;
+            tr.appendChild(amountTd);
+    
+            List.appendChild(tr);
+        });
+    }
+    
+    function sortTable() {
+        const rows = Array.from(List.getElementsByTagName('tr'));
+        rows.sort((a, b) => {
+            const aAmount = parseFloat(a.lastElementChild.textContent.replace('$', ''));
+            const bAmount = parseFloat(b.lastElementChild.textContent.replace('$', ''));
+            return aAmount - bAmount;
+        });
+    
+        rows.forEach(row => {
+            List.appendChild(row);
+        });
+    }
+    
+    function sortTable1() {
+        const rows = Array.from(List.getElementsByTagName('tr'));
+        rows.sort((a, b) => {
+            const aAmount = parseFloat(a.lastElementChild.textContent.replace('$', ''));
+            const bAmount = parseFloat(b.lastElementChild.textContent.replace('$', ''));
+            return bAmount - aAmount;
+        });
+    
+        rows.forEach(row => {
+            List.appendChild(row);
+        });
+    }
 
-        const amountTd = document.createElement('td');
-        amountTd.textContent = money.amount;
-        tr.appendChild(amountTd);
+    function sortTableByAlphabet() {
+        const rows = Array.from(List.getElementsByTagName('tr'));
+        rows.sort((a, b) => {
+            const aCategory = a.children[1].textContent.toLowerCase();
+            const bCategory = b.children[1].textContent.toLowerCase();
+            return aCategory.localeCompare(bCategory);
+        });
+    
+        rows.forEach(row => {
+            List.appendChild(row);
+        });
+    }
 
-        const categoryTd = document.createElement('td');
-        categoryTd.textContent = money.category;
-        tr.appendChild(categoryTd);
+    function sortTableByReverseAlphabet() {
+        const rows = Array.from(List.getElementsByTagName('tr'));
+        rows.sort((a, b) => {
+            const aCategory = a.children[1].textContent.toLowerCase();
+            const bCategory = b.children[1].textContent.toLowerCase();
+            return bCategory.localeCompare(aCategory);
+        });
+    
+        rows.forEach(row => {
+            List.appendChild(row);
+        });
+    }
+    
+    
 
-        const descriptionTd = document.createElement('td');
-        descriptionTd.textContent = money.description;
-        tr.appendChild(descriptionTd)
-
-        List.appendChild(tr);
-    });
-}
 function getMoneyAndRender() {
     fetch('get-money')
         .then(response => response.json())
@@ -123,5 +178,4 @@ getMoneyAndRender()
     allBalance.appendChild(balanceDiv);
   })
   .catch(error => console.error(error));
-
 
