@@ -1,18 +1,19 @@
 const MoneySchema = require('../models/Money')
 
 exports.addMoney = async (req, res) => {
-    const {title,type, amount, category,newCategory, description}  = req.body
+    const {title,type,date, amount, category,newCategory, description}  = req.body
 
     const money = MoneySchema({
         title,
         type,
+        date,
         amount,
         category: newCategory || category,
         description,
 
     })
     try {
-        if(!title || !category || !type){
+        if(!title || !category || !type ){
             return res.status(400).json({message: 'All fields are required!'})
         }
         if(amount <= 0 || !amount === 'number'){
@@ -29,11 +30,19 @@ exports.addMoney = async (req, res) => {
     console.log(money)
 }
 
-
+exports.getMoney = async (req, res) => {
+    try {
+        const money = await MoneySchema.find().sort({ createdAt: -1 });
+        res.status(200).json(money);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: 'Server Error'})
+    }
+};
 
 exports.getExpenses = async (req, res) => {
     try {
-        const money = await MoneySchema.find({type:'expense'});
+        const money = await MoneySchema.find({ type: 'expense' }).sort({ createdAt: -1 });
         res.status(200).json(money);
     } catch (error) {
         console.log(error);
@@ -43,7 +52,7 @@ exports.getExpenses = async (req, res) => {
 
 exports.getIncomes = async (req, res) => {
     try {
-        const money = await MoneySchema.find({type:'income'});
+        const money = await MoneySchema.find({ type: 'income' }).sort({ createdAt: -1 });
         res.status(200).json(money);
     } catch (error) {
         console.log(error);
@@ -73,6 +82,59 @@ exports.deleteIncome = async (req, res) =>{
             res.status(500).json({message: 'Server Error'})
         })
 }
+
+exports.editIncome = async (req, res) => {
+    const { id } = req.params;
+    const { title, amount,date, category, newCategory, description } = req.body;
+
+    try {
+        const money = await MoneySchema.findById(id);
+
+        if (!money) {
+            return res.status(404).json({ message: 'Money not found' });
+        }
+
+        money.title = title || money.title;
+        money.date = title || money.date;
+        money.amount = amount || money.amount;
+        money.category = newCategory || category || money.category;
+        money.description = description || money.description;
+
+        await money.save();
+
+
+        res.status(200).json({ message: 'Money updated successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+exports.editExpense = async (req, res) => {
+    const { id } = req.params;
+    const { title, amount,date, category, newCategory, description } = req.body;
+
+    try {
+        const money = await MoneySchema.findById(id);
+
+        if (!money) {
+            return res.status(404).json({ message: 'Money not found' });
+        }
+
+        money.title = title || money.title;
+        money.date = title || money.date;
+        money.amount = amount || money.amount;
+        money.category = newCategory || category || money.category;
+        money.description = description || money.description;
+
+        await money.save();
+
+        res.status(200).json({ message: 'Money updated successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
 
 
 
