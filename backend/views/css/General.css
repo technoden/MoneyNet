@@ -1,6 +1,6 @@
 
  :root {
-    --blue: #4e73df;
+    --blue: #2300FD;
     --indigo: #6610f2;
     --purple: #6f42c1;
     --pink: #e83e8c;
@@ -535,6 +535,11 @@
     overflow-y: scroll;
   }
   
+  .container-fluid-mainpage
+  {
+    background-color: #fff;
+  }
+
   .container,
   .container-fluid,
   .container-sm,
@@ -2421,6 +2426,9 @@
   }
   
   .btn-success {
+    font-family: "Montserrat";
+    font-size: 18px;
+    font-weight:bold;
     color: #fff;
     background-color: #1cc88a;
     border-color: #1cc88a;
@@ -2457,6 +2465,16 @@
     box-shadow: 0 0 0 0.2rem rgba(62, 208, 156, 0.5);
   }
   
+  .btn-start {
+    font-family: "Montserrat";
+    font-size: 18px;
+    font-weight:bold;
+    width: 150px;
+    color: #fff;
+    background-color: #2300FD;
+    border-color: #2300FD;
+  }
+
   .btn-info {
     color: #fff;
     background-color: #36b9cc;
@@ -7780,6 +7798,21 @@
     margin-left: 3rem !important;
   }
   
+  .mt-6,
+  .my-6 {
+    margin-top: 12rem !important;
+  }
+
+  .mb-6,
+  .my-6 {
+    margin-bottom: 5rem !important;
+  }
+
+  .ml-6,
+  .mx-6 {
+    margin-left: 4rem !important;
+  }
+
   .p-0 {
     padding: 0 !important;
   }
