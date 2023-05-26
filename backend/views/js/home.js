@@ -79,9 +79,10 @@ Promise.all([fetch('get-expenses'), fetch('get-incomes')])
         moneys.forEach(money => {
             const tr = document.createElement('tr');
         
-            const descriptionTd = document.createElement('td');
-            descriptionTd.textContent = money.description;
-            tr.appendChild(descriptionTd)
+            const dateTd = document.createElement('td');
+            const date = new Date(money.date);
+            dateTd.textContent = date.toLocaleDateString();
+            tr.appendChild(dateTd);
 
             const titleTd = document.createElement('td');
             titleTd.textContent = money.title;
@@ -144,6 +145,32 @@ Promise.all([fetch('get-expenses'), fetch('get-incomes')])
             const aCategory = a.children[1].textContent.toLowerCase();
             const bCategory = b.children[1].textContent.toLowerCase();
             return bCategory.localeCompare(aCategory);
+        });
+    
+        rows.forEach(row => {
+            List.appendChild(row);
+        });
+    }
+    
+    function sortByDateNew() {
+        const rows = Array.from(List.getElementsByTagName('tr'));
+        rows.sort((a, b) => {
+            const aDate = new Date(a.children[0].textContent.split('.').reverse().join('-'));
+            const bDate = new Date(b.children[0].textContent.split('.').reverse().join('-'));
+            return bDate - aDate;
+        });
+    
+        rows.forEach(row => {
+            List.appendChild(row);
+        });
+    }
+
+    function sortByDateOld() {
+        const rows = Array.from(List.getElementsByTagName('tr'));
+        rows.sort((b, a) => {
+            const aDate = new Date(a.children[0].textContent.split('.').reverse().join('-'));
+            const bDate = new Date(b.children[0].textContent.split('.').reverse().join('-'));
+            return bDate - aDate;
         });
     
         rows.forEach(row => {

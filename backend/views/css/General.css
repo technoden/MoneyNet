@@ -9923,10 +9923,9 @@
     animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
   }
   
-  .bg-gradient-primary {
-    background-color: #4e73df;
-    background-image: linear-gradient(180deg, #4f5a74 10%, #0e6933 100%);
-   background-size: cover;
+  .bg-blue {
+    background-color: rgb(0, 0, 96);
+    background-size: cover;
   }
   
   .bg-gradient-secondary {
