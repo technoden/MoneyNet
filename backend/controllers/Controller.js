@@ -20,8 +20,11 @@ exports.addMoney = async (req, res) => {
             return res.status(400).json({message: 'Amount must be a positive number!'})
         }
         await money.save()
-        //res.status(200).json({message: 'Successfully Added'})
-        res.redirect('/?success=Money%20added%20successfully');
+        if (type === 'income') {
+            return res.redirect('/incomes.html?success=Money%20added%20successfully');
+        } else if (type === 'expense') {
+            return res.redirect('/expenses.html?success=Money%20added%20successfully');
+        }
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Server Error'})
