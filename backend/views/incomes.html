@@ -274,53 +274,67 @@
                 <div id="editIncomeModal" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="editIncomeForm">
+                            <form id="editIncomeForm" action="add-money" method="POST">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Edit Income</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="editTitle">Title</label>
-                                        <input type="text" name="editTitle" id="editTitle" class="form-control" required>
+                                <form action="add-money" method="POST">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="title">Title</label>
+                                            <input type="text" name="title" id="title" class="form-control" required>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="type">Type</label>
+                                            <select type="text" name="type" id="type" class="form-control"
+                                                    required>
+                                                <option value="income">Income</option>
+                                                <option value="expense">Expense</option>
+                                            </select>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="amount">Price</label>
+                                            <input type="number" name="amount" id="amount" class="form-control"
+                                                   required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="date">Date</label>
+                                            <input type="date" name="date" id="date" class="form-control"
+                                                   required>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="category">Category </label>
+                                            <select type="text" name="category" id="category" class="form-control" >
+                                                <option value="food">Food</option>
+                                                <option value="transportation">Transportation</option>
+                                                <option value="housing">Housing</option>
+                                                <option value="education">Education</option>
+                                                <option value="health">Health</option>
+                                                <option value="clothing">Clothing</option>
+                                                <option value="travelling">Travelling</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+    
+                                        <div id="new-category-container" style="display:none;">
+                                            <label for="newCategory">New category:</label>
+                                            <input type="text" name="newCategory" id="newCategory">
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="description">Description </label>
+                                            <input type="text" name="description" id="description" class="form-control">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="editAmount">Amount</label>
-                                        <input type="number" name="editAmount" id="editAmount" class="form-control" required>
+    
+                                    <div  class="form_action--button modal-footer">
+                                        <input  type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                        <input type="submit" class="btn btn-success" value="Add">
                                     </div>
-
-                                    <div class="form-group">
-                                        <label for="date">Date</label>
-                                        <input type="date" name="date" id="date" class="form-control"
-                                               required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="category">Category </label>
-                                        <select type="text" name="category" id="category" class="form-control" >
-                                            <option value="food">Food</option>
-                                            <option value="transportation">Transportation</option>
-                                            <option value="housing">Housing</option>
-                                            <option value="education">Education</option>
-                                            <option value="health">Health</option>
-                                            <option value="clothing">Clothing</option>
-                                            <option value="travelling">Travelling</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                    <div id="new-category-container" style="display:none;">
-                                        <label for="newCategory">New category:</label>
-                                        <input type="text" name="newCategory" id="newCategory">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="editDescription">Description</label>
-                                        <input type="text" name="editDescription" id="editDescription" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                    <input type="submit" class="btn btn-info" id="saveChangesButton" value="Save">
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -348,7 +362,29 @@
                 </div>
 
             </div>
-            <!-- /.container-fluid -->
+            
+            <div id="deleteIncomeAsk" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="deleteIncomeFormAsk">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Old version income</h4>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Do you want to delete the old version income?</p>
+                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <!-- End of Main Content -->
@@ -431,32 +467,17 @@
             editButton.setAttribute('data-toggle', 'modal');
             editButton.setAttribute('data-target', '#editIncomeModal');
             editButton.addEventListener('click', () => {
-                // Populate the edit modal with the current values of the income record
-                const editTitle = document.getElementById('editTitle');
-                const editAmount = document.getElementById('editAmount');
-                const editDate = document.getElementById('editDate');
-                const editCategory = document.getElementById('category'); // Updated ID
-                const editDescription = document.getElementById('editDescription');
-                editTitle.value = income.title;
-                editAmount.value = income.amount;
-                editDate.value = income.date;
-                editCategory.value = income.category;
-                editDescription.value = income.description;
+                
 
-                // Save changes button
-                const saveChangesButton = document.getElementById('saveChangesButton');
-                saveChangesButton.addEventListener('click', () => {
-                    const updatedIncome = {
-                        title: editTitle.value,
-                        amount: editAmount.value,
-                        date: editDate.value,
-                        category: editCategory.value,
-                        description: editDescription.value
-                    };
-                    editIncome(income._id, updatedIncome);
-                    $('#editIncomeModal').modal('hide');
+                $('#deleteIncomeAsk').modal('show');
+                const deleteIncomesFormAsk = document.getElementById('deleteIncomeFormAsk');
+                deleteIncomesFormAsk.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    deleteIncome(income._id);
+                    $('#deleteIncomeAsk').modal('hide');
                 });
             });
+                
             actionsTd.appendChild(editButton);
 
             const deleteButton = document.createElement('button');
