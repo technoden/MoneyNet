@@ -1,4 +1,68 @@
 const MoneySchema = require('../models/Money')
+const User = require('../models/User')
+const Role = require('../models/Role')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator')
+const {secret} = require("../config")
+
+const generateAccessToken = (id, roles) => {
+    const payload = {
+        id,
+        roles
+    }
+    return jwt.sign(payload, secret, {expiresIn: "24h"} )
+}
+
+exports.registration = async (req, res) => {
+    try {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({message: "Ошибка при регистрации", errors})
+        }
+        const {name,email, password} = req.body;
+        const candidate = await User.findOne({email})
+        if (candidate) {
+            return res.status(400).json({message: "Пользователь с таким именем уже существует"})
+        }
+        const hashPassword = bcrypt.hashSync(password, 7);
+        const userRole = await Role.findOne({value: "USER"})
+        const user = new User({name,email, password: hashPassword, roles: [userRole.value]})
+        await user.save()
+        return res.json({message: "Пользователь успешно зарегистрирован"})
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({message: 'Registration error'})
+    }
+};
+
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (user && bcrypt.compareSync(password, user.password)) {
+            const token = generateAccessToken(user._id, user.roles);
+            return res.json({ token });
+        } else {
+            return res.status(401).json({ error: 'email or password is incorrect' });
+        }
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'error occurred' });
+    }
+};
+
+
+exports.getUsers=async(req, res)=>{
+        try {
+            const users = await User.find()
+            res.json(users)
+        } catch (e) {
+            console.log(e)
+        }
+};
 
 exports.addMoney = async (req, res) => {
     const {title,type,date, amount, category,newCategory, description}  = req.body
