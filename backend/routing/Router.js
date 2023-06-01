@@ -1,6 +1,6 @@
 const Router = require('express')
 const router = new Router()
-const { addMoney,getExpenses,getIncomes,deleteIncome,deleteExpense, editIncome, editExpense, getMoney} = require('../controllers/Controller');
+const { addMoney,getExpenses,getIncomes,deleteIncome,deleteExpense, editIncome, editExpense, getMoney,login,registration} = require('../controllers/Controller');
 
 router.get('/',(req,res) => {
     res.render("home");
