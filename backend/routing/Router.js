@@ -8,6 +8,8 @@ router.get('/',(req,res) => {
 
 
 router.post('/add-money',addMoney)
+    .post('/login',login)
+    .post('/registration',registration)
     .get('/get-expenses', getExpenses)
     .get('/get-incomes', getIncomes)
     .get('/get-money', getMoney)
