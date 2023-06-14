@@ -2,6 +2,16 @@ const Router = require('express')
 const router = new Router()
 const { addMoney,getExpenses,getIncomes,deleteIncome,deleteExpense, editIncome, editExpense, getMoney,login,registration} = require('../controllers/Controller');
 
+router.use((req, res, next) => {
+    const { userId } = req.body; // Assuming the userId is sent in the request body
+
+    if (userId) {
+        req.userId = userId;
+    }
+
+    next();
+});
+
 router.get('/',(req,res) => {
     res.render("home");
 });

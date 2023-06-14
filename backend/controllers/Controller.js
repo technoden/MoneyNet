@@ -54,20 +54,12 @@ exports.login = async (req, res) => {
     }
 };
 
-
-exports.getUsers=async(req, res)=>{
-        try {
-            const users = await User.find()
-            res.json(users)
-        } catch (e) {
-            console.log(e)
-        }
-};
-
 exports.addMoney = async (req, res) => {
     const {title,type,date, amount, category,newCategory, description}  = req.body
+    const userId = req.userId;
 
     const money = MoneySchema({
+        userId,
         title,
         type,
         date,
@@ -98,8 +90,10 @@ exports.addMoney = async (req, res) => {
 }
 
 exports.getMoney = async (req, res) => {
+    const userId = req.userId;
+    //console.log(userId);
     try {
-        const money = await MoneySchema.find().sort({ createdAt: -1 });
+        const money = await MoneySchema.find({ userId }).sort({ createdAt: -1 });
         res.status(200).json(money);
     } catch (error) {
         console.log(error);
@@ -108,8 +102,9 @@ exports.getMoney = async (req, res) => {
 };
 
 exports.getExpenses = async (req, res) => {
+    const userId = req.userId;
     try {
-        const money = await MoneySchema.find({ type: 'expense' }).sort({ createdAt: -1 });
+        const money = await MoneySchema.find({ userId , type: 'expense' }).sort({ createdAt: -1 });
         res.status(200).json(money);
     } catch (error) {
         console.log(error);
@@ -118,8 +113,9 @@ exports.getExpenses = async (req, res) => {
 };
 
 exports.getIncomes = async (req, res) => {
+    const userId = req.userId;
     try {
-        const money = await MoneySchema.find({ type: 'income' }).sort({ createdAt: -1 });
+        const money = await MoneySchema.find({ userId , type: 'income' }).sort({ createdAt: -1 });
         res.status(200).json(money);
     } catch (error) {
         console.log(error);

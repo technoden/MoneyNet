@@ -43,6 +43,15 @@ app.get('/expenses', (req, res) => {
 app.get('/info', (req, res) => {
     res.sendFile(path.join(intialPath, "info.html"));
 });
+app.use((req, res, next) => {
+    const { userId } = req.body; // Assuming the userId is sent in the request body
+
+    if (userId) {
+        req.userId = userId;
+    }
+
+    next();
+});
 
 app.post('/register-user', async(req, res) => {
     const { name, email, password } = req.body;
@@ -83,6 +92,8 @@ app.post('/login-user', async(req, res) => {
         } else{
             res.json('email or password is incorrect');
         }
+        const userId=email;
+        console.log(userId);
     } catch(err){
         console.log(err);
         res.json('error occurred');
