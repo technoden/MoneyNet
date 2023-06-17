@@ -261,6 +261,8 @@
                                         </div>
                                     </div>
 
+                                    <input type="hidden" id="userId" name="userId" value="">
+
                                     <div class="form_action--button modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal"
                                             value="Cancel">
@@ -545,6 +547,9 @@
                 console.error(error);
             }
         }
+
+        const userId = document.querySelector('#userId');
+        userId.value = `${sessionStorage.name}`;
 
     </script>
     <script type="text/javascript" src="js/home.js"></script>
