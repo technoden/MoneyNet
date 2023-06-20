@@ -57,6 +57,7 @@ exports.login = async (req, res) => {
 exports.addMoney = async (req, res) => {
     const {title,type,date, amount, category,newCategory, description}  = req.body
     const userId = req.userId;
+    console.log('AddMoney',userId);
 
     const money = MoneySchema({
         userId,
@@ -90,11 +91,11 @@ exports.addMoney = async (req, res) => {
 }
 
 exports.getMoney = async (req, res) => {
-    const userId = req.userId;
-    //console.log(userId);
+    const userId = req.body.userId;
+    console.log('GetMoney',userId);
     try {
         const money = await MoneySchema.find({ userId }).sort({ createdAt: -1 });
-        res.status(200).json(money);
+        res.status(200).json({ money, userId });
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Server Error'})
@@ -103,9 +104,10 @@ exports.getMoney = async (req, res) => {
 
 exports.getExpenses = async (req, res) => {
     const userId = req.userId;
+    console.log('GetExpenses',userId);
     try {
         const money = await MoneySchema.find({ userId , type: 'expense' }).sort({ createdAt: -1 });
-        res.status(200).json(money);
+        res.status(200).json({ money, userId });
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Server Error'})
@@ -114,9 +116,10 @@ exports.getExpenses = async (req, res) => {
 
 exports.getIncomes = async (req, res) => {
     const userId = req.userId;
+    console.log('GetIncomes',userId);
     try {
         const money = await MoneySchema.find({ userId , type: 'income' }).sort({ createdAt: -1 });
-        res.status(200).json(money);
+        res.status(200).json({ money, userId });
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Server Error'})
