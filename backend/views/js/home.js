@@ -303,22 +303,4 @@ getMoneyAndRender()
     })
     .catch(error => console.error(error));
 
-    const userId = sessionStorage.getItem('name');
-
-    fetch('/userId', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId })
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log('Имя отправлено на сервер');
-            } else {
-                console.error('Произошла ошибка при отправке имени на сервер');
-            }
-        })
-        .catch(error => {
-            console.error('Произошла ошибка при отправке запроса на сервер', error);
-        });
+    
