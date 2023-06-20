@@ -1,6 +1,6 @@
 const Router = require('express')
 const router = new Router()
-const { addMoney,getExpenses,getIncomes,deleteIncome,deleteExpense, editIncome, editExpense, getMoney,login,registration} = require('../controllers/Controller');
+const { addMoney,getExpenses,getIncomes, getUserId, deleteIncome,deleteExpense, editIncome, editExpense, getMoney,login,registration} = require('../controllers/Controller');
 
 router.use((req, res, next) => {
     const userId = req.body.userId; // Assuming userId is sent in the request body
@@ -24,6 +24,7 @@ router.post('/add-money',addMoney)
     .get('/get-expenses', getExpenses)
     .get('/get-incomes', getIncomes)
     .get('/get-money', getMoney)
+    .post('/userId', getUserId)
     .delete('/delete-income/:id', deleteIncome)
     .delete('/delete-expense/:id', deleteExpense)
     //.put('edit-income/:id',editIncome)

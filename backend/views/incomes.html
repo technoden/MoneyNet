@@ -271,7 +271,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Edit Modal HTML -->
                     <div id="editIncomeModal" class="modal fade">
                         <div class="modal-dialog">
@@ -548,10 +548,29 @@
                 console.error(error);
             }
         }
-        
-        const userId = document.querySelector('#userId');
-        userId.value = `${sessionStorage.name}`;
 
+        const userIdName = document.querySelector('#userId');
+        userIdName.value = `${sessionStorage.name}`;
+
+        const userId = sessionStorage.getItem('name');
+
+        fetch('/userId', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId })
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Имя отправлено на сервер');
+                } else {
+                    console.error('Произошла ошибка при отправке имени на сервер');
+                }
+            })
+            .catch(error => {
+                console.error('Произошла ошибка при отправке запроса на сервер', error);
+            });
     </script>
     <script type="text/javascript" src="js/home.js"></script>
 

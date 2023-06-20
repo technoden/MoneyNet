@@ -126,6 +126,13 @@ exports.getIncomes = async (req, res) => {
     }
 };
 
+exports.getUserId = (req, res) => {
+    const userId = req.userId;
+    console.log('userId:', userId);
+    return userId;
+};
+
+
 
 exports.deleteExpense = async (req, res) =>{
     const {id} = req.params;
