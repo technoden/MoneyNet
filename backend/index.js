@@ -53,6 +53,19 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/userId', (req, res) => {
+
+    const userId = 'alex@gmail.com' ;
+
+    if (userId) {
+      const response = { userId };
+  
+      res.json(response);
+    } else {
+      res.status(404).json({ error: 'Nie znaleziono uzytkownika' });
+    }
+  });
+
 app.post('/register-user', async(req, res) => {
     const { name, email, password } = req.body;
 
