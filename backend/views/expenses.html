@@ -551,7 +551,7 @@
         const userId = sessionStorage.getItem('email');
 
 
-        fetch('/userId', {
+        fetch('/getExpenses', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -568,18 +568,7 @@
             .catch(error => {
                 console.error('Произошла ошибка при отправке запроса на сервер', error);
             });
-            fetch('/userId')
-            .then(response => response.json())
-            .then(data => {
-                if (data.userId) {
-                    console.log('userId:', data.userId);
-                } else {
-                    console.log('userId не получен');
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка при получении userId:', error);
-            });
+            
     </script>
     <script type="text/javascript" src="js/home.js"></script>
 

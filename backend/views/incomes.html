@@ -191,6 +191,7 @@
                                             <th>Category</th>
                                             <th>Date</th>
                                             <th>Description</th>
+                                            <th>userId</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -466,6 +467,10 @@
                 descriptionTd.textContent = income.description;
                 tr.appendChild(descriptionTd);
 
+                const userIdTd = document.createElement('td');
+                userIdTd.textContent = income.userId;
+                tr.appendChild(userIdTd);
+
                 const actionsTd = document.createElement('td');
 
                 // Edit button
@@ -509,7 +514,7 @@
         }
 
         function getIncomesAndRender() {
-            fetch('get-incomes')
+            fetch('getIncomes')
                 .then(response => response.json())
                 .then(data => {
                     renderIncomeList(data);
@@ -554,7 +559,7 @@
 
         const userId = sessionStorage.getItem('email');
 
-        fetch('/userId', {
+        fetch('/getIncomes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -572,18 +577,25 @@
                 console.error('Произошла ошибка при отправке запроса на сервер', error);
             });
 
-        fetch('/userId')
-            .then(response => response.json())
-            .then(data => {
-                if (data.userId) {
-                    console.log('userId:', data.userId);
+            fetch('/getIncomes', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId })
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Имя отправлено на сервер');
                 } else {
-                    console.log('userId не получен');
+                    console.error('Произошла ошибка при отправке имени на сервер');
                 }
             })
             .catch(error => {
-                console.error('Ошибка при получении userId:', error);
+                console.error('Произошла ошибка при отправке запроса на сервер', error);
             });
+
+       
     </script>
     <script type="text/javascript" src="js/home.js"></script>
 

@@ -19,12 +19,15 @@ router.get('/',(req,res) => {
 
 
 router.post('/add-money',addMoney)
-    .post('/login',login)
-    .post('/registration',registration)
+    .post('/login-user',login)
+    .post('/register-user',registration)
     .get('/get-expenses', getExpenses)
     .get('/get-incomes', getIncomes)
     .get('/get-money', getMoney)
-    .post('/userId', getUserId)
+    .post('/getIncomes', getIncomes)
+    .post('/getExpenses', getExpenses)
+    .post('/getMoney', getMoney)
+    .get('/getIncomes',getIncomes)
     .delete('/delete-income/:id', deleteIncome)
     .delete('/delete-expense/:id', deleteExpense)
     //.put('edit-income/:id',editIncome)
