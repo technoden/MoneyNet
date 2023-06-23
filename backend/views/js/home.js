@@ -287,8 +287,8 @@ function getMoneyAndRender() {
         .catch(error => console.error(error));
 }
 
-getMoneyAndRender()
-
+getMoneyAndRender();
+Promise.all([fetch('get-expenses/' + userId), fetch('get-incomes/' + userId)])
     .then(responses => Promise.all(responses.map(response => response.json())))
     .then(data => {
         const expenses = data[0];

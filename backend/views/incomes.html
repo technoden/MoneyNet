@@ -334,7 +334,7 @@
                                             </div>
                                         </div>
 
-
+                                        <input type="hidden" id="userId" name="userId" value="">
 
 
                                         <div class="form_action--button modal-footer">
@@ -438,6 +438,11 @@
         </div>
     </div>
     <script>
+        const userIdName = document.querySelector('#userId');
+        userIdName.value = `${sessionStorage.email}`;
+
+        const userId = sessionStorage.getItem('email');
+
         const moneyList = document.getElementById('money-list');
 
         function renderIncomeList(incomes) {
@@ -550,10 +555,7 @@
             }
         }
 
-        const userIdName = document.querySelector('#userId');
-        userIdName.value = `${sessionStorage.email}`;
 
-        const userId = sessionStorage.getItem('email');
 
         // fetch('/userId', {
         //     method: 'POST',

@@ -50,3 +50,9 @@ body{
     font-weight: 800;
     text-transform: capitalize;
 }
+
+.type-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}

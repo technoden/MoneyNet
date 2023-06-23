@@ -94,7 +94,7 @@ exports.getMoney = async (req, res) => {
     const userId = req.params.userId;
     //console.log('GetMoney',userId);
     try {
-        const money = await MoneySchema.find({ userId: userId }).sort({ createdAt: -1 });
+        const money = await MoneySchema.find({userId: userId}).sort({ createdAt: -1 });
         res.status(200).json(money);
     } catch (error) {
         console.log(error);
