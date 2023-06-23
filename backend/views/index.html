@@ -581,6 +581,20 @@ function renderMoneyList(moneys) {
     moneys.forEach(money => {
         const tr = document.createElement('tr');
 
+        const typeTd = document.createElement('td');
+        const typeCircle = document.createElement('div');
+        typeCircle.classList.add('type-circle');
+
+        if (money.type === 'expense') {
+            typeCircle.style.backgroundColor = 'red';
+        } else if (money.type === 'income') {
+            typeCircle.style.backgroundColor = 'blue';
+        }
+
+        typeTd.appendChild(typeCircle);
+        tr.appendChild(typeTd);
+
+
         const dateTd = document.createElement('td');
         const date = new Date(money.date);
         dateTd.textContent = date.toLocaleDateString();
@@ -594,14 +608,17 @@ function renderMoneyList(moneys) {
         categoryTd.textContent = money.category;
         tr.appendChild(categoryTd);
 
+        
+
         const amountTd = document.createElement('td');
         amountTd.textContent = `$${money.amount}`;
         tr.appendChild(amountTd);
 
-        const typeTd = document.createElement('td');
-        typeTd.textContent = `${money.type}`;
-        tr.appendChild(typeTd);
+        // const typeTd = document.createElement('td');
+        // typeTd.textContent = `${money.type}`;
+        // tr.appendChild(typeTd);
 
+        
 
         List.appendChild(tr);
     });
@@ -662,8 +679,8 @@ function sortTableByReverseAlphabet() {
 function sortByDateNew() {
     const rows = Array.from(List.getElementsByTagName('tr'));
     rows.sort((a, b) => {
-        const aDate = new Date(a.children[0].textContent.split('.').reverse().join('-'));
-        const bDate = new Date(b.children[0].textContent.split('.').reverse().join('-'));
+        const aDate = new Date(a.children[1].textContent.split('.').reverse().join('-'));
+        const bDate = new Date(b.children[1].textContent.split('.').reverse().join('-'));
         return bDate - aDate;
     });
 
@@ -675,8 +692,8 @@ function sortByDateNew() {
 function sortByDateOld() {
     const rows = Array.from(List.getElementsByTagName('tr'));
     rows.sort((b, a) => {
-        const aDate = new Date(a.children[0].textContent.split('.').reverse().join('-'));
-        const bDate = new Date(b.children[0].textContent.split('.').reverse().join('-'));
+        const aDate = new Date(a.children[1].textContent.split('.').reverse().join('-'));
+        const bDate = new Date(b.children[1].textContent.split('.').reverse().join('-'));
         return bDate - aDate;
     });
 
@@ -689,7 +706,7 @@ function sortByFood() {
     const rows = List.getElementsByTagName('tr');
 
     for (let i = 0; i < rows.length; i++) {
-        const categoryTd = rows[i].getElementsByTagName('td')[2];
+        const categoryTd = rows[i].getElementsByTagName('td')[3];
 
         if (categoryTd.textContent !== 'food') {
             rows[i].style.display = 'none';  
@@ -703,7 +720,7 @@ function sortByTransportation() {
     const rows = List.getElementsByTagName('tr');
 
     for (let i = 0; i < rows.length; i++) {
-        const categoryTd = rows[i].getElementsByTagName('td')[2];
+        const categoryTd = rows[i].getElementsByTagName('td')[3];
 
         if (categoryTd.textContent !== 'transportation') {
             rows[i].style.display = 'none'; 
@@ -717,7 +734,7 @@ function sortByHousing() {
     const rows = List.getElementsByTagName('tr');
   
     for (let i = 0; i < rows.length; i++) {
-      const categoryTd = rows[i].getElementsByTagName('td')[2];
+      const categoryTd = rows[i].getElementsByTagName('td')[3];
   
       if (categoryTd.textContent !== 'housing') {
         rows[i].style.display = 'none';  
@@ -731,7 +748,7 @@ function sortByHousing() {
     const rows = List.getElementsByTagName('tr');
   
     for (let i = 0; i < rows.length; i++) {
-      const categoryTd = rows[i].getElementsByTagName('td')[2];
+      const categoryTd = rows[i].getElementsByTagName('td')[3];
   
       if (categoryTd.textContent !== 'education') {
         rows[i].style.display = 'none';  
@@ -746,7 +763,7 @@ function sortByHousing() {
     const rows = List.getElementsByTagName('tr');
   
     for (let i = 0; i < rows.length; i++) {
-      const categoryTd = rows[i].getElementsByTagName('td')[2];
+      const categoryTd = rows[i].getElementsByTagName('td')[3];
   
       if (categoryTd.textContent !== 'health') {
         rows[i].style.display = 'none';  
@@ -760,7 +777,7 @@ function sortByHousing() {
     const rows = List.getElementsByTagName('tr');
   
     for (let i = 0; i < rows.length; i++) {
-      const categoryTd = rows[i].getElementsByTagName('td')[2];
+      const categoryTd = rows[i].getElementsByTagName('td')[3];
   
       if (categoryTd.textContent !== 'clothing') {
         rows[i].style.display = 'none';  
@@ -774,7 +791,7 @@ function sortByHousing() {
     const rows = List.getElementsByTagName('tr');
   
     for (let i = 0; i < rows.length; i++) {
-      const categoryTd = rows[i].getElementsByTagName('td')[2];
+      const categoryTd = rows[i].getElementsByTagName('td')[3];
   
       if (categoryTd.textContent !== 'travelling') {
         rows[i].style.display = 'none';  
