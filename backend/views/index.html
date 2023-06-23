@@ -493,35 +493,35 @@
     <script>
         const userId = sessionStorage.getItem('email');
 
-fetch('/getMoney', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ userId })
-})
-    .then(response => {
-        if (response.ok) {
-            console.log('Имя отправлено на сервер');
-        } else {
-            console.error('Произошла ошибка при отправке имени на сервер');
-        }
-    })
-    .catch(error => {
-        console.error('Произошла ошибка при отправке запроса на сервер', error);
-    });
-    // fetch('/userId')
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             if (data.userId) {
-    //                 console.log('userId:', data.userId);
-    //             } else {
-    //                 console.log('userId не получен');
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Ошибка при получении userId:', error);
-    //         });
+// fetch('/userId', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ userId })
+// })
+//     .then(response => {
+//         if (response.ok) {
+//             console.log('Имя отправлено на сервер');
+//         } else {
+//             console.error('Произошла ошибка при отправке имени на сервер');
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Произошла ошибка при отправке запроса на сервер', error);
+//     });
+//     fetch('/userId')
+//             .then(response => response.json())
+//             .then(data => {
+//                 if (data.userId) {
+//                     console.log('userId:', data.userId);
+//                 } else {
+//                     console.log('userId не получен');
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Ошибка при получении userId:', error);
+//             });
     </script>
     <script src="js/home.js"></script>
 </body>

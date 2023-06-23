@@ -505,7 +505,8 @@
         }
 
         function getExpensesAndRender() {
-            fetch('get-expenses')
+            const userId = sessionStorage.email;
+            fetch('get-expenses/' + userId)
                 .then(response => response.json())
                 .then(data => {
                     renderExpenseList(data);
@@ -551,24 +552,35 @@
         const userId = sessionStorage.getItem('email');
 
 
-        fetch('/getExpenses', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ userId })
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Имя отправлено на сервер');
-                } else {
-                    console.error('Произошла ошибка при отправке имени на сервер');
-                }
-            })
-            .catch(error => {
-                console.error('Произошла ошибка при отправке запроса на сервер', error);
-            });
-            
+        // fetch('/userId', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ userId })
+        // })
+        //     .then(response => {
+        //         if (response.ok) {
+        //             console.log('Имя отправлено на сервер');
+        //         } else {
+        //             console.error('Произошла ошибка при отправке имени на сервер');
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Произошла ошибка при отправке запроса на сервер', error);
+        //     });
+        //     fetch('/userId')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         if (data.userId) {
+        //             console.log('userId:', data.userId);
+        //         } else {
+        //             console.log('userId не получен');
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Ошибка при получении userId:', error);
+        //     });
     </script>
     <script type="text/javascript" src="js/home.js"></script>
 

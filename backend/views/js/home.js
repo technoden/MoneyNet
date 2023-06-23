@@ -1,4 +1,5 @@
 const greeting = document.querySelector('.greeting');
+const userId = sessionStorage.email;
 
 window.onload = () => {
     if (!sessionStorage.name) {
@@ -28,7 +29,7 @@ select.addEventListener('change', () => {
 
 const incomeSum = document.getElementById('income-sum');
 
-fetch('get-incomes')
+fetch('get-incomes/' + userId)
     .then(response => response.json())
     .then(data => {
         const sum = data.reduce((acc, income) => acc + income.amount, 0);
@@ -42,7 +43,7 @@ fetch('get-incomes')
 
 const expenseSum = document.getElementById('expense-sum');
 
-fetch('get-expenses')
+fetch('get-expenses/' + userId)
     .then(response => response.json())
     .then(data => {
         const sum = data.reduce((acc, expense) => acc + expense.amount, 0);
@@ -56,7 +57,7 @@ fetch('get-expenses')
 
 const allBalance = document.getElementById('all-balance');
 
-Promise.all([fetch('get-expenses'), fetch('get-incomes')])
+Promise.all([fetch('get-expenses/' + userId), fetch('get-incomes/' + userId)])
     .then(responses => Promise.all(responses.map(response => response.json())))
     .then(data => {
         const expenses = data[0];
@@ -278,7 +279,7 @@ function sortByHousing() {
   }  
 
 function getMoneyAndRender() {
-    fetch('get-money')
+    fetch('get-money/' + userId)
         .then(response => response.json())
         .then(data => {
             renderMoneyList(data);

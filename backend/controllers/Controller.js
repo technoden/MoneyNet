@@ -90,18 +90,12 @@ exports.addMoney = async (req, res) => {
     console.log(money)
 }
 
-function getUserId(req) {
-    const userId = req.userId;
-    console.log('userId:', userId);
-    return userId;
-}
-
 exports.getMoney = async (req, res) => {
-    const userId = getUserId(req);
-    console.log('GetMoney',userId);
+    const userId = req.params.userId;
+    //console.log('GetMoney',userId);
     try {
-        const money = await MoneySchema.find({ userId }).sort({ createdAt: -1 });
-        res.status(200).json({ money, userId });
+        const money = await MoneySchema.find({ userId: userId }).sort({ createdAt: -1 });
+        res.status(200).json(money);
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Server Error'})
@@ -109,11 +103,11 @@ exports.getMoney = async (req, res) => {
 };
 
 exports.getExpenses = async (req, res) => {
-    const userId = getUserId(req);
-    console.log('GetExpenses',userId);
+    const userId = req.params.userId;
+    //console.log('GetExpenses',userId);
     try {
-        const money = await MoneySchema.find({ userId , type: 'expense' }).sort({ createdAt: -1 });
-        res.status(200).json({ money, userId });
+        const money = await MoneySchema.find({ userId: userId , type: 'expense' }).sort({ createdAt: -1 });
+        res.status(200).json(money);
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Server Error'})
@@ -121,19 +115,22 @@ exports.getExpenses = async (req, res) => {
 };
 
 exports.getIncomes = async (req, res) => {
-    const userId = getUserId(req); 
-    console.log('getIncomes', userId);
+    const userId = req.params.userId;
+    //console.log('GetIncomes',userId);
     try {
-        const money = await MoneySchema.find({ userId, type: 'income' }).sort({ createdAt: -1 });
-        res.status(200).json( money);
-        
+        const money = await MoneySchema.find({ userId: userId , type: 'income' }).sort({ createdAt: -1 });
+        res.status(200).json(money);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: 'Server Error' });
+        res.status(500).json({message: 'Server Error'})
     }
 };
 
-
+// exports.getUserId = (req, res) => {
+//     const userId = req.userId;
+//     console.log('userId:', userId);
+//     return userId;
+// };
 
 
 
