@@ -328,7 +328,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" id="userId" name="userId" value="">
+                                    <input type="hidden" id="editUserId" name="userId" value="">
 
                                     <div class="form_action--button modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal"
@@ -478,7 +478,8 @@
                     deleteExpense(expense._id);
                     $('#deleteExpenseAsk').modal('hide');
                 });
-
+                    const editUserIdField = document.getElementById('editUserId');
+                    editUserIdField.value = sessionStorage.email;
                     const saveChangesButton = document.getElementById('saveChangesButton');
                     saveChangesButton.addEventListener('click', () => {
                        

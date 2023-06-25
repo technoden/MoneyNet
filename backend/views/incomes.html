@@ -334,7 +334,7 @@
                                             </div>
                                         </div>
 
-                                        <input type="hidden" id="userId" name="userId" value="">
+                                        <input type="hidden" id="editUserId" name="userId" value="">
 
 
                                         <div class="form_action--button modal-footer">
@@ -489,6 +489,8 @@
                         deleteIncome(income._id);
                         $('#deleteIncomeAsk').modal('hide');
                     });
+                    const editUserIdField = document.getElementById('editUserId');
+                    editUserIdField.value = sessionStorage.email;
                 });
 
                 actionsTd.appendChild(editButton);
